@@ -96,7 +96,7 @@ else
     yum clean all && yum makecache
 fi
 
-yum install python3 python3-pip python3-venv git curl -y
+yum install python3 python3-pip git curl -y
 
 git clone $GITHUB_REPO
 
