@@ -50,18 +50,16 @@ show_welcome() {
     clear
     echo -e "${CYAN}"
     echo "╔══════════════════════════════════════════════════════════════╗"
-    echo -e "║${PURPLE}                    HadoopDeploy_tool${CYAN}                         ║"
-    echo -e "║${PURPLE}                    一键安装脚本${CYAN}                               ║"
-    echo "║                                                              ║"
-    echo -e "║${GREEN}  让Hadoop集群部署变得简单高效${CYAN}                                  ║"
-    echo -e "║${GREEN}  支持全自动、半自动、手动三种部署模式${CYAN}                           ║"
-    echo "║                                                              ║"
-    echo -e "║${YELLOW}  作者: violet27-chf${CYAN}                                          ║"
-    echo -e "║${YELLOW}  版本: 1.0.0${CYAN}                                                 ║"
-    echo "║                                                              ║"
-    echo -e "║${BLUE}  让Hadoop集群部署变得简单高效${CYAN}                                  ║"
-    echo -e "║${BLUE}  支持全自动、半自动、手动三种部署模式${CYAN}          ║"
-    echo "╚══════════════════════════════════════════════════════════════╝"
+    echo -e "${CYAN}║         ${PURPLE}HadoopDeploy_tool${CYAN}                               ║"
+    echo -e "${CYAN}║         ${PURPLE}一键安装脚本${CYAN}                                     ║"
+    echo -e "${CYAN}║                                                        ║"
+    echo -e "${CYAN}║  ${GREEN}让Hadoop集群部署变得简单高效${CYAN}                        ║"
+    echo -e "${CYAN}║  ${GREEN}支持全自动、半自动、手动三种部署模式${CYAN}                 ║"
+    echo -e "${CYAN}║                                                        ║"
+    echo -e "${CYAN}║  ${YELLOW}作者: violet27-chf${CYAN}                                 ║"
+    echo -e "${CYAN}║  ${YELLOW}版本: 1.0.0${CYAN}                                       ║"
+    echo -e "${CYAN}║                                                        ║"
+    echo -e "${CYAN}╚════════════════════════════════════════════════════════╝${NC}"
     echo -e "${NC}"
     echo -e "${PURPLE}项目信息:${NC}"
     echo -e "  - 名称: ${GREEN}$PROJECT_NAME${NC}"
@@ -109,10 +107,16 @@ fi
 log_info "安装系统依赖包..."
 yum install python3 python3-pip git curl -y
 
+log_info "安装nmap..."
+yum install nmap -y
+
+log_info "切换目录..."
+cd /opt
+
 log_info "下载项目文件..."
 git clone $GITHUB_REPO
 
-log_info "进入项目目录..."
+log_info "切换目录..."
 cd HadoopDeploy_tool
 
 log_info "创建 Python 虚拟环境..."
@@ -122,6 +126,7 @@ source venv/bin/activate
 log_info "安装 Python 依赖包..."
 pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
+log_success "安装目录在/opt/hadoopDeploy_tool"
 log_success "安装完成！正在启动 Web 界面..."
 log_info "访问地址: http://localhost:5000"
 echo ""
