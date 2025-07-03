@@ -48,19 +48,15 @@ log_step() {
 # 显示欢迎信息
 show_welcome() {
     clear
-    echo -e "${CYAN}"
-    echo "╔══════════════════════════════════════════════════════════════╗"
-    echo -e "${CYAN}║         ${PURPLE}HadoopDeploy_tool${CYAN}                               ║"
-    echo -e "${CYAN}║         ${PURPLE}一键安装脚本${CYAN}                                     ║"
-    echo -e "${CYAN}║                                                        ║"
-    echo -e "${CYAN}║  ${GREEN}让Hadoop集群部署变得简单高效${CYAN}                        ║"
-    echo -e "${CYAN}║  ${GREEN}支持全自动、半自动、手动三种部署模式${CYAN}                 ║"
-    echo -e "${CYAN}║                                                        ║"
-    echo -e "${CYAN}║  ${YELLOW}作者: violet27-chf${CYAN}                                 ║"
-    echo -e "${CYAN}║  ${YELLOW}版本: 1.0.0${CYAN}                                       ║"
-    echo -e "${CYAN}║                                                        ║"
-    echo -e "${CYAN}╚════════════════════════════════════════════════════════╝${NC}"
-    echo -e "${NC}"
+    echo -e "${PURPLE}HadoopDeploy_tool"
+    echo -e "${PURPLE}一键安装脚本${NC}"
+    echo
+    echo -e "${GREEN}让Hadoop集群部署变得简单高效"
+    echo -e "支持全自动、半自动、手动三种部署模式${NC}"
+    echo
+    echo -e "${YELLOW}作者: violet27-chf"
+    echo -e "版本: 1.0.0${NC}"
+    echo
     echo -e "${PURPLE}项目信息:${NC}"
     echo -e "  - 名称: ${GREEN}$PROJECT_NAME${NC}"
     echo -e "  - 版本: ${YELLOW}$PROJECT_VERSION${NC}"
