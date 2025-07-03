@@ -14,7 +14,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+NC='\033[0m' 
 
 # 项目信息
 PROJECT_NAME="HadoopDeploy_tool"
@@ -50,34 +50,35 @@ show_welcome() {
     clear
     echo -e "${CYAN}"
     echo "╔══════════════════════════════════════════════════════════════╗"
-    echo "║                    HadoopDeploy_tool                         ║"
-    echo "║                    一键安装脚本                               ║"
+    echo -e "║${PURPLE}                    HadoopDeploy_tool${CYAN}                         ║"
+    echo -e "║${PURPLE}                    一键安装脚本${CYAN}                               ║"
     echo "║                                                              ║"
-    echo "║  让Hadoop集群部署变得简单高效                                  ║"
-    echo "║  支持全自动、半自动、手动三种部署模式                           ║"
+    echo -e "║${GREEN}  让Hadoop集群部署变得简单高效${CYAN}                                  ║"
+    echo -e "║${GREEN}  支持全自动、半自动、手动三种部署模式${CYAN}                           ║"
     echo "║                                                              ║"
-    echo "║  作者: violet27-chf                                          ║"
-    echo "║  版本: 1.0.0                                                 ║"
+    echo -e "║${YELLOW}  作者: violet27-chf${CYAN}                                          ║"
+    echo -e "║${YELLOW}  版本: 1.0.0${CYAN}                                                 ║"
     echo "║                                                              ║"
-    echo "║  让Hadoop集群部署变得简单高效                                  ║"
-    echo "║  支持全自动、半自动、手动三种部署模式                           ║"
+    echo -e "║${BLUE}  让Hadoop集群部署变得简单高效${CYAN}                                  ║"
+    echo -e "║${BLUE}  支持全自动、半自动、手动三种部署模式${CYAN}          ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
-    echo "项目信息:"
-    echo "  - 名称: $PROJECT_NAME"
-    echo "  - 版本: $PROJECT_VERSION"
-    echo "  - 仓库: $GITHUB_REPO"
-    echo "  - 安装目录: $INSTALL_DIR"
+    echo -e "${PURPLE}项目信息:${NC}"
+    echo -e "  - 名称: ${GREEN}$PROJECT_NAME${NC}"
+    echo -e "  - 版本: ${YELLOW}$PROJECT_VERSION${NC}"
+    echo -e "  - 仓库: ${BLUE}$GITHUB_REPO${NC}"
+    echo -e "  - 安装目录: ${CYAN}$INSTALL_DIR${NC}"
     echo ""
-    echo "此脚本将自动完成以下操作:"
-    echo "  1. 检查系统环境"
-    echo "  2. 安装Python和依赖"
-    echo "  3. 下载项目文件"
-    echo "  4. 安装Python依赖"
-    echo "  5. 启动Web界面"
+    echo -e "${PURPLE}此脚本将自动完成以下操作:${NC}"
+    echo -e "  ${GREEN}1.${NC} 检查系统环境"
+    echo -e "  ${GREEN}2.${NC} 安装Python和依赖"
+    echo -e "  ${GREEN}3.${NC} 下载项目文件"
+    echo -e "  ${GREEN}4.${NC} 安装Python依赖"
+    echo -e "  ${GREEN}5.${NC} 启动Web界面"
     echo ""
     
-    read -p "是否继续安装? (y/N): " -n 1 -r
+    echo -e "${YELLOW}是否继续安装? (y/N): ${NC}" -n 1 -r
+    read -p "" -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         log_info "安装已取消"
@@ -85,23 +86,43 @@ show_welcome() {
     fi
 }
 
+# 显示欢迎信息
+show_welcome
+
+# 开始安装流程
+log_step "开始安装 HadoopDeploy_tool..."
+
 #检查系统版本
+log_info "检查系统版本..."
 if grep -qE "release 8\\." /etc/redhat-release; then
+    log_info "检测到 CentOS 8，配置 yum 源..."
     rm -rf /etc/yum.repos.d/*
     curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo
     yum clean all && yum makecache
 else
+    log_info "检测到 CentOS 7，配置 yum 源..."
     rm -rf /etc/yum.repos.d/*
     curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
     yum clean all && yum makecache
 fi
 
+log_info "安装系统依赖包..."
 yum install python3 python3-pip git curl -y
 
+log_info "下载项目文件..."
 git clone $GITHUB_REPO
 
+log_info "进入项目目录..."
 cd HadoopDeploy_tool
+
+log_info "创建 Python 虚拟环境..."
 python3 -m venv venv
 source venv/bin/activate
+
+log_info "安装 Python 依赖包..."
 pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+log_success "安装完成！正在启动 Web 界面..."
+log_info "访问地址: http://localhost:5000"
+echo ""
 python3 app.py
