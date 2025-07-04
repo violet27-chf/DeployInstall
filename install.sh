@@ -71,9 +71,10 @@ show_welcome() {
     echo -e "  ${GREEN}5.${NC} 启动Web界面"
     echo ""
     
-    echo -e "${YELLOW}是否继续安装? (y/N): ${NC}\c"
+    # 检查是否为非交互式环境（如curl | bash）
     if [ -t 0 ]; then
         # 交互式终端，等待用户输入
+        echo -e "${YELLOW}是否继续安装? (y/N): ${NC}\c"
         read
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -81,10 +82,9 @@ show_welcome() {
             exit 0
         fi
     else
-        # 非交互式，直接退出并提示
+        # 非交互式环境，自动继续安装
+        log_info "检测到非交互式环境，自动继续安装..."
         echo
-        log_info "检测到非交互式环境，必须在终端下手动运行本脚本，已取消安装。"
-        exit 1
     fi
 }
 
